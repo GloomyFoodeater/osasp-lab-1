@@ -14,8 +14,7 @@ then
 	
 	# %s - file size
 	# %p - file name
-	find ".$dir" -size +$start -size -$end -printf "%s\t$dir/%f \n" | sort -n
+	find ".$dir" -size +$start -size -$end -printf "%s\t/$dir/%f\n" | sort -n
 else
 	echo "Error: $dir didn't exist." >&2
 fi
-
