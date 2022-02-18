@@ -12,7 +12,7 @@ then
 	if [ -d $src_dir_name ]
 	then
 		# Output found file names to destination file
-		find $src_dir_name -name "*.$extension" | sort -d >$dst_file_name
+		find $src_dir_name -name "*.$extension" -printf "%f\n" | sort -d >$dst_file_name
 		echo "Success! Check $dst_file_name to see the output."
 	else
 		# Output error
