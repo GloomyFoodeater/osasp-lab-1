@@ -9,15 +9,7 @@ then
 	# Check file existence
 	if [ -f $src ]
 	then
-		gcc $src -o $dst.exe
-		
-		# Check previous command code
-		if [ $? -ne 0 ]
-		then
-			echo "Error: Compilation failed!" >&2
-		else
-			echo "Compilation succeded!"
-		fi
+		gcc $src -o $dst.exe && ./$dst.exe
 	else
 		echo "Error: File didn't exist!" >&2
 	fi
