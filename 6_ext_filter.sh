@@ -12,10 +12,8 @@ then
 	if [ -d $src_dir_name ]
 	then
 		# Output found file names to destination file
-		curr_dir=$(pwd) # Remember current directory
-		cd $src_dir_name
-		ls *.$extension | sort -d  >$curr_dir/$dst_file_name
-		echo "Success! Check $curr_dir/$dst_file_name to see the output."
+		find $src_dir_name -name "*.$extension" | sort -d >$dst_file_name
+		echo "Success! Check $dst_file_name to see the output."
 	else
 		# Output error
 		echo "Error: $src_dir_name is not a directory." >&2
