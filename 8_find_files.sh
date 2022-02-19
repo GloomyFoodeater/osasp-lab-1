@@ -11,14 +11,14 @@ then
 fi
 
 # Check 1st arg
-if echo $start | grep -qE "[^0-9]+$"
+if echo $start | grep -qE "[^0-9]+"
 then
 	echo "Error: 1st argument($start) is NaN." >&2
 	exit 1
 fi
 
 # Check 2nd arg
-if echo $end | grep -qE "[^0-9]+$"
+if echo $end | grep -qE "[^0-9]+"
 then
 	echo "Error: 2nd argument($end) is NaN." >&2
 	exit 1
