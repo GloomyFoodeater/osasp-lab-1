@@ -33,13 +33,21 @@ int printDir(char* name, FILE* f, int min, int max, int* counter)
             // Print file
             if (d->d_type == DT_REG && min < fileStat.st_size && fileStat.st_size < max)
             {
-                fprintf(f, "%s\t%ldb\n", fullName, fileStat.st_size);
+                // Canonise path
+                char resolvedPath[256];
+                realpath(fullName, resolvedPath);
+                
+                // Output
+                fprintf(f, "%s\t%ldb\n", resolvedPath, fileStat.st_size);
                 (*counter)++;
             }
             
             // Enter child directory
             else if(d->d_type == DT_DIR && strcmp(d->d_name, ".") && strcmp(d->d_name, ".."))
+            {
+                printf("Opening %s\n", fullName);
                 printDir(fullName, f, min, max, counter);
+            }
         }
     }
 
@@ -86,10 +94,19 @@ int main(int argc, char* argv[])
         fprintf(stderr, "Error: Fail to open %s\n", argv[4]);
         return 1;
     }
+
+    // Erase redundant slash
+    int n = strlen(argv[1]);
+    if(argv[1][n - 1] == '/')
+        argv[1][n - 1] = '\0';
+
+
+    // Print files
     int counter = 0;
     printDir(argv[1], f, min, max, &counter);
     printf("%d files found\n", counter);
 
+    // Close file
     if(fclose(f))
     {
         fprintf(stderr, "Error: Fail to close %s\n", argv[4]);
