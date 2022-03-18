@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <termios.h>
+#define CRTL_F 6
 
 int getch()
 {
@@ -32,7 +33,7 @@ int main(int argc, char* argv[])
     }
 
     char c;
-    while ((c = getch()) != 6)
+    while ((c = getch()) != CRTL_F)
         putc(c, f);
     putc('\n', stdout);
     putc('\n', f);

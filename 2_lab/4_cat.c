@@ -43,10 +43,10 @@ int main(int argc, char* argv[])
     }    
 
     int lineCounter = 0;
-    while (!feof(f))
+    char c;
+    while ((c = getc(f)) != EOF)
     {
         // Printing
-        char c = getc(f);
         putc(c, stdout);
         
         // Line counting
@@ -64,7 +64,7 @@ int main(int argc, char* argv[])
                 break;
         }
     }
-    printf("\b \n");
+    putc('\n', stdout);
 
     // File closing
     if(fclose(f) == EOF)

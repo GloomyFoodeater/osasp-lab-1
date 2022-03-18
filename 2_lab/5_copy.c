@@ -31,13 +31,12 @@ int main(int argc, char* argv[])
 
     // Copying file byte-by-byte
     int bytes = 0;
-    while(!feof(src))
+    char c;
+    while((c = getc(src)) != EOF)
     {
-        char c = getc(src);
         putc(c, dst);
         bytes++;
     }
-    putc('\b', dst);
 
     // Permissions' transfer
     struct stat srcStat;
