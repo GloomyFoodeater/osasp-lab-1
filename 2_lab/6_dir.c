@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <dirent.h>
+#include <linux/limits.h>
 
 int printDir(char* name)
 {
@@ -32,8 +33,8 @@ int printDir(char* name)
 int main()
 {
     int res;
-    char buf[256];
-    getcwd(buf, 256);
+    char buf[PATH_MAX];
+    getcwd(buf, PATH_MAX);
     res = printDir(buf);
     printf("------------------------------------------------\n");
     res |= printDir("/");

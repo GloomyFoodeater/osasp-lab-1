@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <dirent.h>
+#include <linux/limits.h>
 
 int printDir(char* name, FILE* f, int min, int max, int* counter)
 {
@@ -21,7 +22,7 @@ int printDir(char* name, FILE* f, int min, int max, int* counter)
     while (d = readdir(dir))
     {
         // Get full name of file
-        char fullName[256] = {0};
+        char fullName[PATH_MAX] = {0};
         strcat(fullName, name);
         strcat(fullName, "/");
         strcat(fullName, d->d_name);
@@ -34,7 +35,7 @@ int printDir(char* name, FILE* f, int min, int max, int* counter)
             if (d->d_type == DT_REG && min < fileStat.st_size && fileStat.st_size < max)
             {
                 // Canonise path
-                char resolvedPath[256];
+                char resolvedPath[PATH_MAX];
                 realpath(fullName, resolvedPath);
                 
                 // Output
