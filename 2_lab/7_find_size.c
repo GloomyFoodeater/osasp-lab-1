@@ -33,13 +33,9 @@ int printDir(char* name, FILE* f, int min, int max, int* counter)
         {
             // Print file
             if (d->d_type == DT_REG && min < fileStat.st_size && fileStat.st_size < max)
-            {
-                // Canonise path
-                char resolvedPath[PATH_MAX];
-                realpath(fullName, resolvedPath);
-                
+            {                
                 // Output
-                fprintf(f, "%s\t%ldb\n", resolvedPath, fileStat.st_size);
+                fprintf(f, "%s\t%ldb\n", fullName, fileStat.st_size);
                 (*counter)++;
             }
             
@@ -78,7 +74,7 @@ int main(int argc, char* argv[])
     {
         fprintf(stderr, "Error: 2nd argument must be natural number or 0\n");
         return 1;
-    }
+    } 
 
     // Argv[3] validation (max size) & str -> int
     int max = strtol(argv[3], &endptr, 10);
@@ -95,16 +91,14 @@ int main(int argc, char* argv[])
         fprintf(stderr, "Error: Fail to open %s\n", argv[4]);
         return 1;
     }
-
-    // Erase redundant slash
-    int n = strlen(argv[1]);
-    if(argv[1][n - 1] == '/')
-        argv[1][n - 1] = '\0';
-
-
+            
+    // Canonise path
+    char resolvedPath[PATH_MAX];
+    realpath(argv[1], resolvedPath);
+    
     // Print files
     int counter = 0, res;
-    res = printDir(argv[1], f, min, max, &counter);
+    res = printDir(resolvedPath, f, min, max, &counter);
     printf("%d files found\n", counter);
 
     // Close file
