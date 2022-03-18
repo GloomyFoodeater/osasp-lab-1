@@ -1,4 +1,19 @@
 #include <stdio.h>
+#include <unistd.h>
+#include <termios.h>
+
+int getch()
+{
+    int ch;
+    struct termios oldt, newt;
+    tcgetattr(STDIN_FILENO, &oldt);
+    newt = oldt;
+    newt.c_lflag &= ~ICANON;
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+    ch = getc(stdin);
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    return ch;
+}
 
 int main(int argc, char* argv[])
 {
@@ -17,8 +32,9 @@ int main(int argc, char* argv[])
     }
 
     char c;
-    while ((c = getc(stdin)) != 6)
+    while ((c = getch()) != 6)
         putc(c, f);
+    putc('\n', stdout);
     putc('\n', f);
 
     if(fclose(f) == EOF)
