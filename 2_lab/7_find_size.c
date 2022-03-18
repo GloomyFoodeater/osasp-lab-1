@@ -103,8 +103,8 @@ int main(int argc, char* argv[])
 
 
     // Print files
-    int counter = 0;
-    printDir(argv[1], f, min, max, &counter);
+    int counter = 0, res;
+    res = printDir(argv[1], f, min, max, &counter);
     printf("%d files found\n", counter);
 
     // Close file
@@ -114,5 +114,5 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    return 0;
+    return res;
 }
