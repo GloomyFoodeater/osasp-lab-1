@@ -1,5 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <termios.h>
+
+int getch()
+{
+    int ch;
+    struct termios oldt, newt;
+    tcgetattr(STDIN_FILENO, &oldt);
+    newt = oldt;
+    newt.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+    ch = getchar();
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    return ch;
+}
 
 int main(int argc, char* argv[])
 {
@@ -42,10 +57,10 @@ int main(int argc, char* argv[])
         if (n != 0 && lineCounter == n)
         {
             lineCounter = 0;
-            printf("Continue? [enter/q]");
-            c = getc(stdin);
-            printf("\033[A\033[2K"); // Erase previous line
-            if (c == 'q')
+            printf("Continue? [n/any]");
+            c = getch();
+            printf("\033[2K\r"); // Erase previous line
+            if (c == 'n')
                 break;
         }
     }
