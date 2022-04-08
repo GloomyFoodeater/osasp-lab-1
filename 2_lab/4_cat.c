@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
     // Argc validation
     if (argc < 3)
     {
-        fprintf(stderr, "Error: Not enough arguments, \n 1st - file name\n 2nd - natural number(number of lines)\n");
+        fprintf(stderr, "Error: Not enough arguments, \n1st - file name\n2nd - natural number(number of lines)\n");
         return 1;
     }
 
