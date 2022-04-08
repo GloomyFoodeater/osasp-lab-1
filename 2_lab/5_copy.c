@@ -7,7 +7,7 @@ int main(int argc, char* argv[])
     // Argc validation
     if (argc < 3)
     {
-        fprintf(stderr, "Error: Not enough arguments\n");
+        fprintf(stderr, "Error: Not enough arguments\n 1st - source name\n 2nd - destination name\n");
         return 1;
     }
 
