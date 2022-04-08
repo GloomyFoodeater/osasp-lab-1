@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <termios.h>
+#include <errno.h>
 
 int getch()
 {
@@ -21,14 +22,14 @@ int main(int argc, char* argv[])
     // Argc validation
     if (argc < 3)
     {
-        fprintf(stderr, "Error: Not enough arguments\n");
+        fprintf(stderr, "Error: Not enough arguments, \n 1st - file name\n 2nd - natural number(number of lines)\n");
         return 1;
     }
 
     // Argv[2] validation
     char *endptr;
     int n = strtol(argv[2], &endptr, 10);
-    if (*endptr != '\0' || n < 0)
+    if (errno == ERANGE || strlen(argv[2]) == 0 ||  *endptr != '\0' || n < 0)
     {
         fprintf(stderr, "Error: 2nd argument must be natural number or 0\n");
         return 1;
@@ -64,7 +65,6 @@ int main(int argc, char* argv[])
                 break;
         }
     }
-    putc('\n', stdout);
 
     // File closing
     if(fclose(f) == EOF)
