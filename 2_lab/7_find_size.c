@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <dirent.h>
 #include <linux/limits.h>
+#include <errno.h>
 
 int printDir(char* name, FILE* f, int min, int max, int* counter)
 {
@@ -63,14 +64,14 @@ int main(int argc, char* argv[])
     // Argc validation
     if (argc < 5)
     {
-        fprintf(stderr, "Error: Not enough arguments\n");
+        fprintf(stderr, "Error: Not enough arguments\n1st - dir name\n2nd - min size\n3rd - max size\n4th - output file name\n");
         return 1;
     }
 
     // Argv[2] validation (min size) & str -> int
     char *endptr;
     int min = strtol(argv[2], &endptr, 10);
-    if (*endptr != '\0' || min < 0)
+    if (errno == ERANGE || strlen(argv[2]) == 0 ||  *endptr != '\0' || min < 0)
     {
         fprintf(stderr, "Error: 2nd argument must be natural number or 0\n");
         return 1;
@@ -78,7 +79,7 @@ int main(int argc, char* argv[])
 
     // Argv[3] validation (max size) & str -> int
     int max = strtol(argv[3], &endptr, 10);
-    if (*endptr != '\0' || max < 0)
+    if (errno == ERANGE || strlen(argv[2]) == 0 ||  *endptr != '\0' || max < 0)
     {
         fprintf(stderr, "Error: 3rd argument must be natural number or 0\n");
         return 1;
