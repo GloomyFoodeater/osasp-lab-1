@@ -7,6 +7,7 @@
 #include <dirent.h>
 #include <linux/limits.h>
 #include <errno.h>
+#include <string.h>
 
 int printDir(char* name, FILE* f, int min, int max, int* counter)
 {
@@ -14,7 +15,7 @@ int printDir(char* name, FILE* f, int min, int max, int* counter)
     DIR* dir = opendir(name);
     if(!dir)
     {
-        fprintf(stderr, "Error: Fail to open %s\n", name);
+        fprintf(stderr, "Error: Fail to open dir '%s'\n", name);
         return 1;
     }
 
@@ -43,7 +44,7 @@ int printDir(char* name, FILE* f, int min, int max, int* counter)
             // Enter child directory
             else if(d->d_type == DT_DIR && strcmp(d->d_name, ".") && strcmp(d->d_name, ".."))
             {
-                printf("Opening %s\n", fullName);
+                printf("Opening '%s'\n", fullName);
                 printDir(fullName, f, min, max, counter);
             }
         }
@@ -52,7 +53,7 @@ int printDir(char* name, FILE* f, int min, int max, int* counter)
     // Close directory
     if(closedir(dir))
     {
-        fprintf(stderr, "Error: Fail to close %s\n", name);
+        fprintf(stderr, "Error: Fail to close dir '%s'\n", name);
         return 1;
     }
 
@@ -79,7 +80,7 @@ int main(int argc, char* argv[])
 
     // Argv[3] validation (max size) & str -> int
     int max = strtol(argv[3], &endptr, 10);
-    if (errno == ERANGE || strlen(argv[2]) == 0 ||  *endptr != '\0' || max < 0)
+    if (errno == ERANGE || strlen(argv[3]) == 0 ||  *endptr != '\0' || max < 0)
     {
         fprintf(stderr, "Error: 3rd argument must be natural number or 0\n");
         return 1;
@@ -89,7 +90,7 @@ int main(int argc, char* argv[])
     FILE* f = fopen(argv[4], "w");
     if(!f)
     {
-        fprintf(stderr, "Error: Fail to open %s\n", argv[4]);
+        fprintf(stderr, "Error: Fail to open file '%s'\n", argv[4]);
         return 1;
     }
             
@@ -106,7 +107,7 @@ int main(int argc, char* argv[])
     // Close file
     if(fclose(f))
     {
-        fprintf(stderr, "Error: Fail to close %s\n", argv[4]);
+        fprintf(stderr, "Error: Fail to close file '%s'\n", argv[4]);
         return 1;
     }
 
