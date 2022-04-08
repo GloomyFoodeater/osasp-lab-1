@@ -99,7 +99,8 @@ int main(int argc, char* argv[])
     // Print files
     int counter = 0, res;
     res = printDir(resolvedPath, f, min, max, &counter);
-    printf("%d files found\n", counter);
+    if(res == 0)
+        printf("%d files found\n", counter);
 
     // Close file
     if(fclose(f))
