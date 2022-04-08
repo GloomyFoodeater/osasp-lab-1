@@ -85,7 +85,13 @@ int main(int argc, char* argv[])
         fprintf(stderr, "Error: 3rd argument must be natural number or 0\n");
         return 1;
     }
-    
+
+    if(max < min)
+    {
+        fprintf(stderr, "Error: 3rd arguments was lesser than 2nd\n");
+        return 1;
+    }
+
     // Argv[4] validation & file opening
     FILE* f = fopen(argv[4], "w");
     if(!f)
