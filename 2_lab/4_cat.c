@@ -18,31 +18,31 @@ int getch()
     return ch;
 }
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
     // Argc validation
     if (argc < 3)
     {
-        fprintf(stderr, "Error: Not enough arguments, \n1st - file name\n2nd - natural number(number of lines)\n");
+        fprintf(stderr, "Error: Not enough arguments\n1st - name of file to print\n2nd - natural number of printed lines per iteration (0 to print all file at once)\n");
         return 1;
     }
 
     // Argv[2] validation
     char *endptr;
     int n = strtol(argv[2], &endptr, 10);
-    if (errno == ERANGE || strlen(argv[2]) == 0 ||  *endptr != '\0' || n < 0)
+    if (errno == ERANGE || strlen(argv[2]) == 0 || *endptr != '\0' || n < 0)
     {
         fprintf(stderr, "Error: 2nd argument must be natural number or 0\n");
         return 1;
     }
 
     // File opening, argv[1] validation
-    FILE* f = fopen(argv[1], "r");
+    FILE *f = fopen(argv[1], "r");
     if (!f)
     {
-        fprintf(stderr, "Error: Fail to open the file\n");
+        fprintf(stderr, "Error: Fail to open the file '%s'\n", argv[1]);
         return 1;
-    }    
+    }
 
     int lineCounter = 0;
     char c;
@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
     {
         // Printing
         putc(c, stdout);
-        
+
         // Line counting
         if (c == '\n')
             lineCounter++;
@@ -68,9 +68,9 @@ int main(int argc, char* argv[])
     }
 
     // File closing
-    if(fclose(f) == EOF)
+    if (fclose(f))
     {
-        fprintf(stderr, "Error: Fail to close the file\n");
+        fprintf(stderr, "Error: Fail to close the file '%s'\n", argv[1]);
         return 1;
     }
 

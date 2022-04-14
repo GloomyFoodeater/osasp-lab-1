@@ -3,27 +3,26 @@
 #include <dirent.h>
 #include <linux/limits.h>
 
-int printDir(char* name)
+int printDir(char *name)
 {
-    printf("Directory %s files:\n", name);
-
     // Open directory
-    DIR* dir = opendir(name);
-    if(!dir)
+    DIR *dir = opendir(name);
+    if (!dir)
     {
-        fprintf(stderr, "Error: Fail to open %s\n", name);
+        fprintf(stderr, "Error: Fail to open '%s'\n", name);
         return 1;
     }
 
-    // Read directory    
-    struct dirent* d;
+    // Read directory
+    printf("Directory '%s' files:\n", name);
+    struct dirent *d;
     while (d = readdir(dir))
         printf("\t%s\n", d->d_name);
 
     // Close directory
-    if(closedir(dir))
+    if (closedir(dir))
     {
-        fprintf(stderr, "Error: Fail to close %s\n", name);
+        fprintf(stderr, "Error: Fail to close '%s'\n", name);
         return 1;
     }
 
@@ -38,6 +37,6 @@ int main()
     res = printDir(buf);
     printf("------------------------------------------------\n");
     res |= printDir("/");
-    
+
     return res;
 }
