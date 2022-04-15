@@ -31,7 +31,7 @@ void print_time_and_pid()
 
 // Wait process and output error
 // If pid is lesser or equal than zero does nothing
-void wait_with_err(int pid)
+void waitpid_with_err(int pid)
 {
     if (pid > 0 && waitpid(pid, NULL, 0) == -1)
     {
@@ -49,6 +49,7 @@ void handle_child(pid_t pid)
     }
     else if (pid == 0)
     {
+        // Child process entry point
         print_time_and_pid();
         exit(0);
     }
@@ -63,6 +64,6 @@ void main()
     handle_child(child_2);
 
     system("ps -x");
-    wait_with_err(child_1);
-    wait_with_err(child_2);
+    waitpid_with_err(child_1);
+    waitpid_with_err(child_2);
 }
