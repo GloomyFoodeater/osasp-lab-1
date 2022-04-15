@@ -15,9 +15,9 @@ int printDir(char *name)
 
     // Read directory
     printf("Directory '%s' files:\n", name);
-    struct dirent *d;
-    while (d = readdir(dir))
-        printf("\t%s\n", d->d_name);
+    struct dirent *entry;
+    while (entry = readdir(dir))
+        printf("\t%s\n", entry->d_name);
 
     // Close directory
     if (closedir(dir))
