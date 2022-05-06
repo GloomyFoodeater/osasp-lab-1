@@ -48,7 +48,6 @@ void convert_args(int argc, char *argv[], int *N, int *n)
         exit(1);
     }
 }
-
 // Factorial of number
 unsigned long long int fact(int n)
 {
@@ -103,24 +102,19 @@ int sum_doubles(char *filename, double *res)
 
         // Split string by white space
         char *delim = " ";
-        char *token = strtok(str, delim);
-        char *str_double;
-        while (token)
-        {
-            str_double = strtok(NULL, delim);
-            token = strtok(NULL, delim);
-        }
+        char *token = strtok(str, delim); // pid
+        token = strtok(NULL, delim);      // member
 
         // Conversion string -> double
         char *endptr;
-        double num = strtod(str_double, &endptr);
-        if (errno == ERANGE && (errno != 0 && num == 0) || endptr == str_double)
+        double member = strtod(token, &endptr);
+        if (errno == ERANGE || *endptr != '\0' || strcmp(token, "") == 0)
         {
             fprintf(stderr, "Fail to convert string to double");
             perror_fclose(f);
             return -1;
         }
-        *res += num;
+        *res += member;
     }
     perror_fclose(f);
     return 0;
