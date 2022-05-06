@@ -48,6 +48,7 @@ void convert_args(int argc, char *argv[], int *N, int *n)
         exit(1);
     }
 }
+
 // Factorial of number
 unsigned long long int fact(int n)
 {
@@ -156,6 +157,7 @@ void main(int argc, char *argv[])
             pid_t child = fork();
             if (child == 0)
             {
+                free(y);
                 // Child entry point
                 FILE *tmp_file = fopen("tmp.txt", "a");
                 if (!tmp_file)
