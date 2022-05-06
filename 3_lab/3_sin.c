@@ -94,9 +94,9 @@ int sum_doubles(char *filename, double *res)
         return -1;
     }
 
-    char str[60];
+    char str[100];
     *res = 0;
-    while (fgets(str, 50, f))
+    while (fgets(str, 100, f))
     {
         str[strlen(str) - 1] = '\0';
 
@@ -110,7 +110,7 @@ int sum_doubles(char *filename, double *res)
         double member = strtod(token, &endptr);
         if (errno == ERANGE || *endptr != '\0' || strcmp(token, "") == 0)
         {
-            fprintf(stderr, "Fail to convert string to double");
+            fprintf(stderr, "Fail to convert string to double\n");
             perror_fclose(f);
             return -1;
         }
